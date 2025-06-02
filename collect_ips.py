@@ -12,7 +12,7 @@ import csv
 from typing import List, Tuple
 from collections import defaultdict
 
-# 配置日志，输出到控制台和文件
+# 配置日志
 LOG_FILE = "speedtest.log"
 LOG_DIR = os.path.dirname(os.path.abspath(__file__))
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -29,7 +29,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# 禁用 stdout 缓冲，确保实时输出
+# 禁用 stdout 缓冲
 sys.stdout.reconfigure(line_buffering=True)
 
 # 常量
@@ -39,7 +39,7 @@ IP_FILE = "ip.txt"
 IPTEST_SH = "iptest.sh"
 IPTEST_BIN = "iptest"
 
-# 国家标签和别名
+# 国家标签和别名（保持不变）
 COUNTRY_LABELS = {
     'JP': ('🇯🇵', '日本'), 'KR': ('🇰🇷', '韩国'), 'SG': ('🇸🇬', '新加坡'),
     'TW': ('🇹🇼', '台湾'), 'HK': ('🇭🇰', '香港'), 'MY': ('🇲🇾', '马来西亚'),
@@ -69,7 +69,7 @@ COUNTRY_LABELS = {
     'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'HR': ('🇭🇷', '克罗地亚'),
     'RS': ('🇷🇸', '塞尔维亚'), 'BA': ('🇧🇦', '波黑'), 'MK': ('🇲🇰', '北马其顿'),
     'AL': ('🇦🇱', '阿尔巴尼亚'), 'KZ': ('🇰🇿', '哈萨克斯坦'), 'UZ': ('🇺🇿', '乌兹别克斯坦'),
-    'KG': ('🇰🇬', '吉尔吉斯斯坦'), 'TJ': ('🇹🇯', '塔吉克斯坦'), 'TM': ('🇹🇲', '土库曼斯坦'),
+    'KG': ('🇰🇬', '吉尔吉斯斯坦'), 'TJ': ('🇷🇯', '塔吉克斯坦'), 'TM': ('🇹🇲', '土库曼斯坦'),
     'GE': ('🇬🇪', '格鲁吉亚'), 'AM': ('🇦🇲', '亚美尼亚'), 'AZ': ('🇦🇿', '阿塞拜疆'),
     'KW': ('🇰🇼', '科威特'), 'BH': ('🇧🇭', '巴林'), 'OM': ('🇴🇲', '阿曼'),
     'JO': ('🇯🇴', '约旦'), 'LB': ('🇱🇧', '黎巴嫩'), 'SY': ('🇸🇾', '叙利亚'),
