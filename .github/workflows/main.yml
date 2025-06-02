@@ -8,10 +8,10 @@ on:
       - 'ips.txt'
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 00:00
+    - cron: '0 0 * * *'  # 每天 UTC 00:00 运行，相当于 KST 09:00
 
 permissions:
-  contents: write  # 授予写入权限以推送文件
+  contents: write
 
 jobs:
   generate-ips:
@@ -36,8 +36,11 @@ jobs:
           chmod +x iptest.sh
           chmod +x iptest
 
-      - name: Run generate_ips.py
-        run: python generate_ips.py
+      - name: Verify files
+        run: ls -l
+
+      - name: Run collect_ips.py
+        run: python collect_ips.py
 
       - name: Commit and push ips.txt
         run: |
@@ -47,7 +50,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update ips.txt with latest generated IPs"
+            git commit -m "Update ips.txt with latest IPs"
             git push
           fi
         env:
