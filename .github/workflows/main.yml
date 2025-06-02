@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'ips.txt'
   workflow_dispatch:
 
 permissions:
@@ -33,8 +35,6 @@ jobs:
           chmod +x iptest
 
       - name: Run generate_ips.py
-        env:
-          SPEED_TEST_API_KEY: ${{ secrets.SPEED_TEST_API_KEY }}
         run: python generate_ips.py
 
       - name: Commit and push ips.txt
@@ -42,8 +42,12 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add ips.txt
-          git commit -m "Update ips.txt with latest generated IPs"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update ips.txt with latest generated IPs"
+            git push
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
