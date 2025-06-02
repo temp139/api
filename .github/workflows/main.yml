@@ -7,6 +7,8 @@ on:
     paths-ignore:
       - 'ips.txt'
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 00:00
 
 permissions:
   contents: write  # 授予写入权限以推送文件
