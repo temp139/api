@@ -39,7 +39,7 @@ IP_FILE = "ip.txt"
 IPTEST_SH = "iptest.sh"
 IPTEST_BIN = "iptest"
 
-# 国家标签和别名（保持不变）
+# 国家标签和别名
 COUNTRY_LABELS = {
     'JP': ('🇯🇵', '日本'), 'KR': ('🇰🇷', '韩国'), 'SG': ('🇸🇬', '新加坡'),
     'TW': ('🇹🇼', '台湾'), 'HK': ('🇭🇰', '香港'), 'MY': ('🇲🇾', '马来西亚'),
@@ -57,7 +57,7 @@ COUNTRY_LABELS = {
     'TR': ('🇹🇷', '土耳其'), 'IR': ('🇮🇷', '伊朗'),
     'CN': ('🇨🇳', '中国'), 'BD': ('🇧🇩', '孟加拉国'), 'PK': ('🇵🇰', '巴基斯坦'),
     'LK': ('🇱🇰', '斯里兰卡'), 'NP': ('🇳🇵', '尼泊尔'), 'BT': ('🇧🇹', '不丹'),
-    'MV': ('🇲🇻', '马尔代夫'), 'BN': ('🇧🇳', '文莱'), 'TL': ('🇹🇱', '东帝汶'),
+    'MV': ('', '马尔代夫'), 'BN': ('🇧🇳', '文莱'), 'TL': ('🇹🇱', '东帝汶'),
     'EG': ('🇪🇬', '埃及'), 'ZA': ('🇿🇦', '南非'), 'NG': ('🇳🇬', '尼日利亚'),
     'KE': ('🇰🇪', '肯尼亚'), 'GH': ('🇬🇭', '加纳'), 'MA': ('🇲🇦', '摩洛哥'),
     'DZ': ('🇩🇿', '阿尔及利亚'), 'TN': ('🇹🇳', '突尼斯'), 'AR': ('🇦🇷', '阿根廷'),
@@ -69,7 +69,7 @@ COUNTRY_LABELS = {
     'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'HR': ('🇭🇷', '克罗地亚'),
     'RS': ('🇷🇸', '塞尔维亚'), 'BA': ('🇧🇦', '波黑'), 'MK': ('🇲🇰', '北马其顿'),
     'AL': ('🇦🇱', '阿尔巴尼亚'), 'KZ': ('🇰🇿', '哈萨克斯坦'), 'UZ': ('🇺🇿', '乌兹别克斯坦'),
-    'KG': ('🇰🇬', '吉尔吉斯斯坦'), 'TJ': ('🇷🇯', '塔吉克斯坦'), 'TM': ('🇹🇲', '土库曼斯坦'),
+    'KG': ('🇰🇬', '吉尔吉斯斯坦'), 'TJ': ('🇹🇯', '塔吉克斯坦'), 'TM': ('🇹🇲', '土库曼斯坦'),
     'GE': ('🇬🇪', '格鲁吉亚'), 'AM': ('🇦🇲', '亚美尼亚'), 'AZ': ('🇦🇿', '阿塞拜疆'),
     'KW': ('🇰🇼', '科威特'), 'BH': ('🇧🇭', '巴林'), 'OM': ('🇴🇲', '阿曼'),
     'JO': ('🇯🇴', '约旦'), 'LB': ('🇱🇧', '黎巴嫩'), 'SY': ('🇸🇾', '叙利亚'),
@@ -395,16 +395,13 @@ def main():
                         logger.error(f"{INPUT_CSV} 未生成或内容无效")
                         sys.exit(1)
                 else:
-                    logger.error(f"测速失败，返回码：{return_code}")
+                    logger.error(f"返回码：{return_code}")
                     sys.exit(1)
-            except OSError as e:
-                logger.error(f"无法执行 {IPTEST_SH}：{e}")
-                logger.info("可能的原因：")
-                logger.info(f"1. {IPTEST_SH} 文件格式错误（可能包含 Windows 换行符）。运行：sudo apt-get install dos2unix && dos2unix {IPTEST_SH}")
-                logger.info(f"2. {IPTEST_BIN} 二进制文件不可执行或与系统不兼容。检查：file {IPTEST_BIN}")
-                sys.exit(1)
             except Exception as e:
                 logger.error(f"执行 {IPTEST_SH} 时发生未知错误：{e}")
+                logger.info("可能原因：")
+                logger.info(f"1. {IPTEST_SH} 文件格式错误（可能包含 Windows 换行符）。运行运行：：sudo apt-get install dos2unix && dos2unix {IPTEST_SH}")
+                logger.info(f"2. {IPTEST_BIN} 二进制文件不可执行或与系统不兼容。检查：file {IPTEST_BIN}")
                 sys.exit(1)
         else:
             logger.error(f"未找到 {IPTEST_SH}，请检查路径")
