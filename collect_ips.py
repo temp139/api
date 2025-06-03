@@ -26,7 +26,7 @@ LOG_PATH = os.path.join(LOG_DIR, LOG_FILE)
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(message)s',
+    format='%(asctime)s [%(levelname)s] %(message)s',
     handlers=[
         logging.FileHandler(LOG_PATH, encoding="utf-8", mode="w"),
         logging.StreamHandler(sys.stdout)
@@ -71,23 +71,25 @@ COUNTRY_LABELS = {
     'MY': ('🇲🇾', '马来西亚'), 'TH': ('🇹🇭', '泰国'), 'ID': ('🇮🇩', '印度尼西亚'), 'PH': ('🇵🇭', '菲律宾'), 'VN': ('🇻🇳', '越南'),
     'IN': ('🇮🇳', '印度'), 'MO': ('🇲🇴', '澳门'), 'KH': ('🇰🇭', '柬埔寨'), 'LA': ('🇱🇦', '老挝'), 'MM': ('🇲🇲', '缅甸'),
     'MN': ('🇲🇳', '蒙古'), 'KP': ('🇰🇵', '朝鲜'), 'CN': ('🇨🇳', '中国'), 'BD': ('🇧🇩', '孟加拉国'), 'PK': ('🇵🇰', '巴基斯坦'),
-    'LK': ('🇱🇰', '斯里兰卡'), 'NP': ('🇳🇵', '尼泊尔'), 'MV': ('🇲🇻', '马尔代夫'), 'BN': ('🇧🇳', '文莱'),
+    'LK': ('🇱🇰', '斯里兰卡'), 'NP': ('🇵🇵', '尼泊尔'), 'MV': ('🇲🇻', '马尔代夫'), 'BN': ('🇧🇳', '文莱'),
     'SA': ('🇸🇦', '沙特阿拉伯'), 'AE': ('🇦🇪', '阿联酋'), 'QA': ('🇶🇦', '卡塔尔'), 'IL': ('🇮🇱', '以色列'), 'TR': ('🇹🇷', '土耳其'),
     'IR': ('🇮🇷', '伊朗'), 'KW': ('🇰🇼', '科威特'), 'BH': ('🇬🇭', '巴林'), 'OM': ('🇴🇲', '阿曼'), 'JO': ('🇯🇴', '约旦'),
     'LB': ('🇱🇧', '黎巴嫩'), 'SY': ('🇸🇾', '叙利亚'), 'IQ': ('🇮🇶', '伊拉克'), 'YE': ('🇾🇪', '也门'),
     'GB': ('🇬🇧', '英国'), 'DE': ('🇩🇪', '德国'), 'FR': ('🇫🇷', '法国'), 'IT': ('🇮🇹', '意大利'), 'ES': ('🇪🇸', '西班牙'),
     'NL': ('🇳🇱', '荷兰'), 'FI': ('🇫🇮', '芬兰'), 'SE': ('🇸🇪', '瑞典'), 'NO': ('🇳🇴', '挪威'), 'DK': ('🇩🇰', '丹麦'),
     'CH': ('🇨🇭', '瑞士'), 'AT': ('🇦🇹', '奥地利'), 'BE': ('🇧🇪', '比利时'), 'IE': ('🇮🇪', '爱尔兰'), 'PT': ('🇵🇹', '葡萄牙'),
-    'GR': ('🇬🇷', '希腊'), 'EG': ('🇪🇬', '埃及'), 'AU': ('🇦🇺', '澳大利亚'), 'US': ('🇺🇸', '美国'), 'BG': ('🇧🇬', '保加利亚'), 'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'AW': ('🇦', 'AW'),
-    'AM': ('🇦🇲', 'AM')
+    'GR': ('🇬🇷', '希腊'), 'EG': ('🇪🇬', '埃及'), 'AU': ('🇦🇺', '澳大利亚'), 'US': ('🇺🇸', '美国'), 'BG': ('🇬🇧', '保加利亚'), 
+    'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'AW': ('🇦', 'AW'), 'AM': ('🇦🇲', 'AM'),
+    'CA': ('🇨🇦', '加拿大'), 'NZ': ('🇳🇿', '新西兰'), 'BR': ('🇧🇷', '巴西'), 'RU': ('🇷🇺', '俄罗斯'),
+    'PL': ('🇵🇱', '波兰'), 'UA': ('🇺🇦', '乌克兰'), 'CZ': ('🇨🇿', '捷克'), 'HU': ('🇭🇺', '匈牙利'), 
+    'RO': ('🇷🇴', '罗马尼亚'), 'EE': ('🇪🇪', '爱沙尼亚'), 'LV': ('🇱🇻', '拉脱维亚'), 'LT': ('🇱🇹', '立陶宛')
 }
 
-# 国家别名
 COUNTRY_ALIASES = {
-    'SOUTH KOREA': 'KR', 'KORE': 'KR', 'REPUBLIC OF KOREA': 'KR', 'KOREA, REPUBLIC OF': 'KR', '韩国': 'KR',
+    'SOUTH KOREA': 'KR', 'KOREA': 'KR', 'REPUBLIC OF KOREA': 'KR', 'KOREA, REPUBLIC OF': 'KR', '韩国': 'KR',
     'HONG KONG': 'HK', 'HONGKONG': 'HK', 'HK SAR': 'HK', '香港': 'HK',
     'UNITED STATES': 'US', 'USA': 'US', 'U.S.': 'US', 'UNITED STATES OF AMERICA': 'US', '美国': 'US',
-    'UNITED KINGDOM': 'UK', 'GREAT BRITAIN': 'GB', '英国': 'GB',
+    'UNITED KINGDOM': 'GB', 'GREAT BRITAIN': 'GB', 'UK': 'GB', '英国': 'GB',
     'JAPAN': 'JP', 'JPN': 'JP', '日本': 'JP',
     'TAIWAN': 'TW', 'TWN': 'TW', 'TAIWAN, PROVINCE OF CHINA': 'TW', '台湾': 'TW',
     'SINGAPORE': 'SG', 'SGP': 'SG', '新加坡': 'SG',
@@ -106,7 +108,6 @@ COUNTRY_ALIASES = {
     'NORTH KOREA': 'KP', 'KOREA, DEMOCRATIC PEOPLE\'S REPUBLIC OF': 'KP', '朝鲜': 'KP',
     'BRUNEI': 'BN', 'BRUNEI DARUSSALAM': 'BN', '文莱': 'BN',
     'MALDIVES': 'MV', '马尔代夫': 'MV',
-    # 城市映射
     'SINGAPORE': 'SG', '新加坡': 'SG',
     'HONGKONG': 'HK', '香港': 'HK',
     'MUMBAI': 'IN', '孟买': 'IN',
@@ -226,14 +227,13 @@ def standardize_country(value: str) -> str:
     return ''
 
 def find_country_column(header: List[str]) -> int:
-    country_col = -1
     for idx, col in enumerate(header):
         col_lower = col.strip().lower()
-        if col_lower in ['country', '国家', 'country_code', 'countrycode', '国际代码', 'nation', 'location', 'region', 'geo', 'area']:
-            country_col = idx
+        if any(k in col_lower for k in ['country', '国家', 'country_code', 'cc', 'iso_code', 'nation', 'location', 'region', 'geo', 'area']):
             logger.info(f"检测到国家列: 第 {idx + 1} 列 (字段名: {col})")
-            break
-    return country_col
+            return idx
+    logger.warning("未检测到国家列，将扫描行数据")
+    return -1
 
 def extract_country_from_row(row: List[str], country_col: int) -> str:
     if country_col != -1 and country_col < len(row):
@@ -428,42 +428,20 @@ def write_ip_list(ip_ports: List[Tuple[str, int, str]]) -> str:
         logger.error("No IPs to write to ip list")
         return None
     try:
-        web_ip_ports = [(ip, port, country, 'web') for ip, port, country in ip_ports if not country]
-        csv_ip_ports = [(ip, port, country, 'csv') for ip, port, country in ip_ports if country]
-        desired_countries = set(DESIRED_COUNTRIES) if DESIRED_COUNTRIES else set()
-        
-        # 过滤 CSV 节点
-        filtered_csv_ip_ports = [(ip, port, country, source) for ip, port, country, source in csv_ip_ports if not desired_countries or country in desired_countries]
-        
-        # 合并网页和 CSV 节点
-        filtered_ip_ports = web_ip_ports + filtered_csv_ip_ports
-        
-        if not filtered_ip_ports:
-            logger.error("No IPs match desired countries or available")
-            return None
-        
         # 去重
         unique_ip_ports = []
         seen = set()
-        for ip, port, country, source in filtered_ip_ports:
+        for ip, port, _ in ip_ports:
             key = (ip, port)
             if key not in seen:
                 seen.add(key)
-                unique_ip_ports.append((ip, port, country, source))
+                unique_ip_ports.append((ip, port))
         
-        # 写入 ip.txt
+        # 写入 ip.txt（格式：IP 端口）
         with open(IP_LIST_FILE, "w", encoding="utf-8-sig") as f:
-            for ip, port, _, _ in unique_ip_ports:
+            for ip, port in unique_ip_ports:
                 f.write(f"{ip} {port}\n")
         
-        # 写入网页节点到单独文件
-        with open("web_ips.txt", "w", encoding="utf-8-sig") as f:
-            for ip, port, _, _ in web_ip_ports:
-                f.write(f"{ip} {port}\n")
-        logger.info(f"Wrote {len(web_ip_ports)} web IPs to web_ips.txt")
-        
-        logger.info(f"Included {len(web_ip_ports)} IPs from WEB_URLS (no country filter)")
-        logger.info(f"Included {len(filtered_csv_ip_ports)} IPs from CSV_URLS (filtered by DESIRED_COUNTRIES)")
         logger.info(f"Generated {IP_LIST_FILE} with {len(unique_ip_ports)} nodes")
         return IP_LIST_FILE
     except PermissionError as e:
@@ -556,19 +534,32 @@ def run_speed_test() -> str:
 def generate_ips_file(csv_file: str) -> int:
     start_time = time.time()
     if not os.path.exists(csv_file):
-        logger.error(f"{csv_file} does not exist")
+        logger.error(f"{csv_file} 不存在")
         return 0
-    
+
+    # 检测编码
+    with open(csv_file, "rb") as f:
+        raw_data = f.read()
+    encoding = detect(raw_data).get("encoding", "utf-8")
+    logger.info(f"检测到 {csv_file} 的编码: {encoding}")
+
+    # 检测分隔符
+    content = raw_data.decode(encoding, errors="replace")
+    lines = content.splitlines()
+    delimiter = detect_delimiter(lines)
+    logger.info(f"检测到分隔符: '{delimiter}'")
+
     final_nodes = []
     try:
-        with open(csv_file, "r", encoding="utf-8-sig") as f:
-            reader = csv.reader(f)
+        with open(csv_file, "r", encoding=encoding, errors="replace") as f:
+            reader = csv.reader(f, delimiter=delimiter)
             header = next(reader, None)
             if not header:
-                logger.error(f"No valid header in {csv_file}")
+                logger.error(f"{csv_file} 没有有效的表头")
                 return 0
-            logger.info(f"CSV header: {', '.join(header)}")
-            
+            logger.info(f"标头: {header}")
+
+            # 确定国家列
             country_col = find_country_column(header)
             ip_col, port_col = 0, 1
             for idx, col in enumerate(header):
@@ -577,56 +568,43 @@ def generate_ips_file(csv_file: str) -> int:
                     ip_col = idx
                 elif col_lower in ['port', '端口']:
                     port_col = idx
-            
+
+            # 逐行处理
             row_count = 0
             for row in reader:
                 row_count += 1
                 if len(row) <= max(ip_col, port_col, country_col):
-                    logger.debug(f"Skipping invalid row {row_count}: {row}")
+                    logger.debug(f"跳过无效行 {row_count}: {row}")
                     continue
-                ip = row[ip_col].strip()
-                port = str(row[port_col]).strip()
-                country = extract_country_from_row(row, country_col)
+                ip, port = row[ip_col].strip(), row[port_col].strip()
                 if not is_valid_ip(ip) or not is_valid_port(port):
-                    logger.debug(f"Invalid IP/port in row {row_count}: {ip}:{port}")
+                    logger.debug(f"无效 IP/端口在行 {row_count}: {ip}:{port}")
                     continue
+                country = extract_country_from_row(row, country_col)
+                logger.debug(f"行 {row_count}: {row}, 提取国家: {country}")
                 final_nodes.append((ip, int(port), country))
-            logger.info(f"Read {row_count} rows from {csv_file}, found {len(final_nodes)} valid nodes")
+            logger.info(f"从 {csv_file} 读取 {row_count} 行，找到 {len(final_nodes)} 个有效节点")
     except Exception as e:
-        logger.error(f"Failed to read {csv_file}: {e}")
+        logger.error(f"无法读取 {csv_file}: {e}")
         return 0
-    
-    # 读取网页节点
-    web_nodes = []
-    if os.path.exists("web_ips.txt"):
-        try:
-            with open("web_ips.txt", "r", encoding="utf-8-sig") as f:
-                for line in f:
-                    parts = line.strip().split()
-                    if len(parts) >= 2 and is_valid_ip(parts[0]) and is_valid_port(parts[1]):
-                        web_nodes.append((parts[0], int(parts[1]), ''))
-            logger.info(f"Read {len(web_nodes)} web nodes from web_ips.txt")
-        except Exception as e:
-            logger.error(f"Failed to read web_ips.txt: {e}")
-    
-    # 合并节点
-    all_nodes = final_nodes + web_nodes
-    if not all_nodes:
-        logger.error(f"No valid nodes found in {csv_file} or web_ips.txt")
+
+    if not final_nodes:
+        logger.error(f"没有符合条件的节点")
         return 0
-        
-    logger.info(f"Found {len(all_nodes)} nodes before deduplication")
+
+    # 按国家排序并生成标签
     country_count = defaultdict(int)
     country_seq = defaultdict(int)
     labeled_nodes = []
-    for ip, port, country in sorted(all_nodes, key=lambda x: x[2] or 'ZZ'):
+    for ip, port, country in sorted(final_nodes, key=lambda x: x[2] or 'ZZ'):
         country = country or 'UNKNOWN'
         country_count[country] += 1
         country_seq[country] += 1
-        emoji, name = COUNTRY_LABELS.get(country, ('🌈', '未知地区'))
-        label = f"{emoji} {name}-{country_seq[country]}"
+        emoji, name = COUNTRY_LABELS.get(country, ('🌐', '未知'))
+        label = f"{emoji}{name}-{country_seq[country]}"
         labeled_nodes.append((ip, port, label))
-    
+
+    # 去重
     unique_nodes = []
     seen = set()
     for ip, port, label in labeled_nodes:
@@ -634,19 +612,17 @@ def generate_ips_file(csv_file: str) -> int:
         if key not in seen:
             seen.add(key)
             unique_nodes.append((ip, port, label))
-    
+
+    # 写入 ips.txt
     try:
         with open(IPS_FILE, "w", encoding="utf-8-sig") as f:
             for ip, port, label in unique_nodes:
                 f.write(f"{ip}:{port}#{label}\n")
-        logger.info(f"Generated {IPS_FILE} with {len(unique_nodes)} unique nodes")
-        logger.debug(f"Country distribution: {{ {', '.join(f'{k}: {v}' for k, v in sorted(country_count.items()))} }}")
+        logger.info(f"生成 {IPS_FILE}，包含 {len(unique_nodes)} 个节点 (耗时: {time.time() - start_time:.2f} 秒)")
+        logger.info(f"国家分布: {dict(country_count)}")
         return len(unique_nodes)
-    except PermissionError as e:
-        logger.error(f"Failed to write {IPS_FILE}: {e}")
-        return 0
     except Exception as e:
-        logger.error(f"Failed to write {IPS_FILE}: {e}")
+        logger.error(f"无法写入 {IPS_FILE}: {e}")
         return 0
 
 def main():
@@ -669,7 +645,7 @@ def main():
         sys.exit(1)
 
     try:
-        for file in [IP_LIST_FILE, IPS_FILE, FINAL_CSV, TEMP_FILE, "web_ips.txt"]:
+        for file in [IP_LIST_FILE, IPS_FILE, FINAL_CSV, TEMP_FILE]:
             if os.path.exists(file):
                 os.remove(file)
                 logger.info(f"Removed old file: {file}")
