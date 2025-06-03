@@ -73,13 +73,13 @@ COUNTRY_LABELS = {
     'MN': ('🇲🇳', '蒙古'), 'KP': ('🇰🇵', '朝鲜'), 'CN': ('🇨🇳', '中国'), 'BD': ('🇧🇩', '孟加拉国'), 'PK': ('🇵🇰', '巴基斯坦'),
     'LK': ('🇱🇰', '斯里兰卡'), 'NP': ('🇳🇵', '尼泊尔'), 'MV': ('🇲🇻', '马尔代夫'), 'BN': ('🇧🇳', '文莱'),
     'SA': ('🇸🇦', '沙特阿拉伯'), 'AE': ('🇦🇪', '阿联酋'), 'QA': ('🇶🇦', '卡塔尔'), 'IL': ('🇮🇱', '以色列'), 'TR': ('🇹🇷', '土耳其'),
-    'IR': ('🇮🇷', '伊朗'), 'KW': ('🇰🇼', '科威特'), 'BH': ('🇧🇭', '巴林'), 'OM': ('🇴🇲', '阿曼'), 'JO': ('🇯🇴', '约旦'),
+    'IR': ('🇮🇷', '伊朗'), 'KW': ('🇰🇼', '科威特'), 'BH': ('🇬🇭', '巴林'), 'OM': ('🇴🇲', '阿曼'), 'JO': ('🇯🇴', '约旦'),
     'LB': ('🇱🇧', '黎巴嫩'), 'SY': ('🇸🇾', '叙利亚'), 'IQ': ('🇮🇶', '伊拉克'), 'YE': ('🇾🇪', '也门'),
     'GB': ('🇬🇧', '英国'), 'DE': ('🇩🇪', '德国'), 'FR': ('🇫🇷', '法国'), 'IT': ('🇮🇹', '意大利'), 'ES': ('🇪🇸', '西班牙'),
     'NL': ('🇳🇱', '荷兰'), 'FI': ('🇫🇮', '芬兰'), 'SE': ('🇸🇪', '瑞典'), 'NO': ('🇳🇴', '挪威'), 'DK': ('🇩🇰', '丹麦'),
     'CH': ('🇨🇭', '瑞士'), 'AT': ('🇦🇹', '奥地利'), 'BE': ('🇧🇪', '比利时'), 'IE': ('🇮🇪', '爱尔兰'), 'PT': ('🇵🇹', '葡萄牙'),
-    'GR': ('🇬🇷', '希腊'), 'EG': ('🇪🇬', 'EG'), 'AU': ('🇦🇺', '澳大利亚'), 'US': ('🇺🇸', '美国'), 'BG': ('🇧🇬', '保加利亚'), 'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'AW': ('🇦', 'AW'),
- 'AM': ('🇦🇲', 'AM')
+    'GR': ('🇬🇷', '希腊'), 'EG': ('🇪🇬', '埃及'), 'AU': ('🇦🇺', '澳大利亚'), 'US': ('🇺🇸', '美国'), 'BG': ('🇧🇬', '保加利亚'), 'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'AW': ('🇦', 'AW'),
+    'AM': ('🇦🇲', 'AM')
 }
 
 # 国家别名
@@ -590,7 +590,7 @@ def generate_ips_file(csv_file: str) -> int:
                 if not is_valid_ip(ip) or not is_valid_port(port):
                     logger.debug(f"Invalid IP/port in row {row_count}: {ip}:{port}")
                     continue
-                final_nodes.append((ip, int(port), country, 'csv'))
+                final_nodes.append((ip, int(port), country))
             logger.info(f"Read {row_count} rows from {csv_file}, found {len(final_nodes)} valid nodes")
     except Exception as e:
         logger.error(f"Failed to read {csv_file}: {e}")
@@ -604,7 +604,7 @@ def generate_ips_file(csv_file: str) -> int:
                 for line in f:
                     parts = line.strip().split()
                     if len(parts) >= 2 and is_valid_ip(parts[0]) and is_valid_port(parts[1]):
-                        web_nodes.append((parts[0], int(parts[1]), '', 'web'))
+                        web_nodes.append((parts[0], int(parts[1]), ''))
             logger.info(f"Read {len(web_nodes)} web nodes from web_ips.txt")
         except Exception as e:
             logger.error(f"Failed to read web_ips.txt: {e}")
@@ -619,12 +619,12 @@ def generate_ips_file(csv_file: str) -> int:
     country_count = defaultdict(int)
     country_seq = defaultdict(int)
     labeled_nodes = []
-    for ip, port, country, source in sorted(all_nodes, key=lambda x: x[2] or 'ZZ'):
+    for ip, port, country in sorted(all_nodes, key=lambda x: x[2] or 'ZZ'):
         country = country or 'UNKNOWN'
         country_count[country] += 1
         country_seq[country] += 1
         emoji, name = COUNTRY_LABELS.get(country, ('🌈', '未知地区'))
-        label = f"{emoji}{name}-{country_seq[country]} ({source})"
+        label = f"{emoji} {name}-{country_seq[country]}"
         labeled_nodes.append((ip, port, label))
     
     unique_nodes = []
