@@ -1,65 +1,72 @@
-name: Generate IPs Workflow # 工作流名称
+name: Generate IPs Workflow
 
 on:
   push:
     branches:
-      - main # 当 main 分支有推送时触发
+      - main
     paths-ignore:
-      - 'ips.txt' # 忽略 ips.txt 文件的更改
-  workflow_dispatch: # 支持手动触发
+      - 'ips.txt'
+  workflow_dispatch:
   schedule:
-    # 每 72 小时运行一次，基于东八区 (CST) 00:00
-    # UTC 时间比东八区晚 8 小时，因此设置为 UTC 16:00 每 3 天运行
-    - cron: '0 16 */3 * *' # 每 3 天 UTC 16:00 运行，相当于东八区 00:00
+    - cron: '0 16 */3 * *'
 
 permissions:
-  contents: write # 授予写权限以提交文件
+  contents: write
 
 jobs:
   generate-ips:
-    runs-on: ubuntu-latest # 使用最新 Ubuntu 运行环境
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository # 检出仓库代码
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python # 设置 Python 环境
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9' # 使用 Python 3.9
+          python-version: '3.9'
 
-      - name: Install dependencies # 安装依赖
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
+          pip install requests beautifulsoup4 charset-normalizer
 
-      - name: Make iptest.sh and iptest executable # 设置 iptest.sh 和 iptest 为可执行
+      - name: Make iptest.sh and iptest executable
         run: |
-          chmod +x iptest.sh
-          chmod +x iptest
+          chmod +x iptest.sh || echo "iptest.sh not found, continuing"
+          chmod +x iptest || echo "iptest not found, continuing"
 
-      - name: Verify files # 验证文件是否存在
+      - name: Verify files
         run: ls -l
 
-      - name: Run collect_ips.py # 运行 collect_ips.py 脚本
+      - name: Run collect_ips.py
         run: python collect_ips.py
 
-      - name: Commit and push ips.txt # 提交并推送 ips.txt
+      - name: Commit and push ips.txt
         run: |
-          git config user.name "GitHub Actions" # 设置 Git 用户名
-          git config user.email "actions@github.com" # 设置 Git 邮箱
-          git add ips.txt
-          if git diff --staged --quiet; then
-            echo "没有更改需要提交"
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          if [ -f ips.txt ]; then
+            git add ips.txt
+            if git diff --staged --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "Update ips.txt file"
+              git push
+            fi
           else
-            git commit -m "更新 ips.txt 文件" # 提交更改
-            git push # 推送到远程仓库
+            echo "ips.txt not found, skipping commit"
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 使用 GitHub Token 进行认证
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload ips.txt as artifact # 上传 ips.txt 作为工作流产物
+      - name: Upload artifacts
+        if: always() # 即使失败也上传
         uses: actions/upload-artifact@v4
         with:
-          name: ips-txt 
-          path: ips.txt 
+          name: workflow-artifacts
+          path: |
+            ips.txt
+            ip.csv
+            speedtest.log
+          if-no-files-found: warn # 如果文件缺失，仅警告
