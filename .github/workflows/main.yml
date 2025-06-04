@@ -27,7 +27,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip' # 缓存 pip 依赖，加速安装
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt' # 明确使用 requirements.txt
 
       # 验证 Python 安装
       - name: Verify Python installation
@@ -47,10 +48,10 @@ jobs:
       - name: Set up virtual environment
         run: |
           python -m venv .venv
-          ls -l .venv/bin/python || echo ".venv/bin/python not found"
+          ls -l .venv/bin/python || echo "ERROR: .venv/bin/python not found"
           source .venv/bin/activate
           pip install --upgrade pip
-          pip install requests charset-normalizer geoip2==4.8.0 maxminddb>=2.0.0 packaging>=21.3 beautifulsoup4
+          pip install -r requirements.txt
           pip list
 
       # 确保 iptest 可执行
@@ -60,14 +61,14 @@ jobs:
             chmod +x iptest
             echo "已确保 iptest 可执行"
           else
-            echo "iptest binary not found"
+            echo "ERROR: iptest binary not found"
             exit 1
           fi
           if [ -f iptest.sh ]; then
             chmod +x iptest.sh
             echo "已确保 iptest.sh 可执行"
           else
-            echo "iptest.sh not found"
+            echo "ERROR: iptest.sh not found"
             exit 1
           fi
 
