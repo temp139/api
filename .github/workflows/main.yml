@@ -2,16 +2,12 @@ name: Generate IPs
 
 on:
   schedule:
-    # 东八区每天凌晨 00:00 运行，每72小时一次
-    # UTC = CST - 8小时，00:00 CST = 16:00 前一天 UTC
-    # 使用 cron 每3天运行
-    - cron: '0 16 */3 * *'
-  workflow_dispatch: # 支持手动触发
+    - cron: '0 16 */3 * *' # 东八区每3天凌晨00:00
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      # 仅当特定文件变更时触发，排除脚本和工作流
       - 'ip.txt'
       - 'ips.txt'
       - 'ip.csv'
@@ -24,13 +20,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 获取完整历史以支持 git 操作
+          fetch-depth: 0
 
       # 设置 Python 环境
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # 使用较新版本
+          python-version: '3.11'
 
       # 安装系统依赖
       - name: Install system dependencies
@@ -38,12 +34,21 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libmaxminddb-dev
 
+      # 创建并激活虚拟环境，安装 Python 依赖
+      - name: Set up virtual environment
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+          pip install requests charset-normalizer geoip2==4.8.0 maxminddb>=2.0.0 packaging>=21.3 beautifulsoup4
+
       # 运行脚本，禁用内部推送
       - name: Run ip-filter-speedtest-api.py
         env:
           MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
         run: |
-          python ip-filter-speedtest-api.py --url=https://bihai.cf/CFIP/CUCC/standard.csv,https://bihai.cf/CFIP/CMCC/standard.csv
+          source .venv/bin/activate
+          python ip-filter-speedtest-api.py --url=https://bihai.cf/CFIP/CUCC/standard.csv,https://bihai.cf/CFIP/CMCC/standard.csv --no-push
         continue-on-error: false
 
       # 检查生成的文件
@@ -66,7 +71,7 @@ jobs:
             exit 0
           fi
           git commit -m "Update IP lists and test results [ci skip]"
-        continue-on-error: true # 允许无更改时继续
+        continue-on-error: true
 
       # 推送更改
       - name: Push changes
@@ -74,7 +79,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git push origin main
-        continue-on-error: false
 
       # 上传 artifacts
       - name: Upload artifacts
