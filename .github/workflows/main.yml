@@ -1,4 +1,3 @@
-```yaml
 name: Generate IPs
 
 on:
@@ -112,4 +111,3 @@ jobs:
             .ip.csv
             speedtest.log
           if-no-files-found: warn
-```
