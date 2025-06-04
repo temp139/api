@@ -28,15 +28,16 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-          cache-dependency-path: 'requirements.txt' # 明确使用 requirements.txt
+          cache-dependency-path: 'requirements.txt' # 使用 requirements.txt 缓存依赖
 
       # 验证 Python 安装
       - name: Verify Python installation
         run: |
-          python --version
-          which python
-          python -m ensurepip --upgrade
-          python -m pip install --upgrade pip
+          python3 --version
+          which python3
+          python3 -m ensurepip --upgrade
+          python3 -m pip install --upgrade pip
+          echo "Python executable: $(which python3)"
 
       # 安装系统依赖
       - name: Install system dependencies
@@ -47,12 +48,23 @@ jobs:
       # 创建并激活虚拟环境，安装 Python 依赖
       - name: Set up virtual environment
         run: |
-          python -m venv .venv
-          ls -l .venv/bin/python || echo "ERROR: .venv/bin/python not found"
+          python3 -m venv .venv
+          ls -l .venv/bin/python3 || echo "ERROR: .venv/bin/python3 not found"
           source .venv/bin/activate
           pip install --upgrade pip
           pip install -r requirements.txt
           pip list
+          echo "Virtual environment Python: $(which python)"
+
+      # 检查 GeoIP 数据库
+      - name: Check GeoIP database
+        run: |
+          if [ -f "GeoLite2-City.mmdb" ]; then
+            echo "GeoIP 数据库存在: GeoLite2-City.mmdb"
+            ls -l GeoLite2-City.mmdb
+          else
+            echo "GeoIP 数据库不存在，将由脚本自动下载"
+          fi
 
       # 确保 iptest 可执行
       - name: Ensure iptest is executable
@@ -78,13 +90,13 @@ jobs:
           MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
         run: |
           source .venv/bin/activate
-          python ip-filter-speedtest-api.py --url=https://bihai.cf/CFIP/CUCC/standard.csv,https://bihai.cf/CFIP/CMCC/standard.csv --no-push
+          python ip-filter-speedtest-api.py --url=https://bihai.cf/CFIP/CUCC/standard.csv,https://bihai.cf/CFIP/CMCC/standard.csv --no-push --update-geoip
         continue-on-error: false
 
       # 检查生成的文件
       - name: Check generated files
         run: |
-          ls -l ip.txt ips.txt ip.csv .ip.csv speedtest.log || echo "部分文件可能未生成"
+          ls -l ip.txt ips.txt ip.csv .ip.csv speedtest.log GeoLite2-City.mmdb || echo "部分文件可能未生成"
 
       # 配置 Git
       - name: Configure Git
@@ -95,12 +107,12 @@ jobs:
       # 提交更改
       - name: Commit changes
         run: |
-          git add ip.txt ips.txt ip.csv .ip.csv speedtest.log
+          git add ip.txt ips.txt ip.csv .ip.csv speedtest.log GeoLite2-City.mmdb
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Update IP lists and test results [ci skip]"
+          git commit -m "Update IP lists, test results, and GeoIP database [ci skip]"
         continue-on-error: true
 
       # 推送更改
@@ -122,4 +134,5 @@ jobs:
             ip.csv
             .ip.csv
             speedtest.log
+            GeoLite2-City.mmdb
           if-no-files-found: warn
