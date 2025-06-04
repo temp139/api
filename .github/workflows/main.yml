@@ -1,9 +1,10 @@
+```yaml
 name: Generate IPs
 
 on:
   schedule:
-    - cron: '0 16 */3 * *' # 东八区每3天凌晨00:00
-  workflow_dispatch:
+    - cron: '0 16 */3 * *' # 东八区每3天凌晨00:00（UTC 16:00 前一天）
+  workflow_dispatch: # 支持手动触发
   push:
     branches:
       - main
@@ -42,6 +43,24 @@ jobs:
           pip install --upgrade pip
           pip install requests charset-normalizer geoip2==4.8.0 maxminddb>=2.0.0 packaging>=21.3 beautifulsoup4
 
+      # 确保 iptest 可执行
+      - name: Ensure iptest is executable
+        run: |
+          if [ -f iptest ]; then
+            chmod +x iptest
+            echo "已确保 iptest 可执行"
+          else
+            echo "iptest binary not found"
+            exit 1
+          fi
+          if [ -f iptest.sh ]; then
+            chmod +x iptest.sh
+            echo "已确保 iptest.sh 可执行"
+          else
+            echo "iptest.sh not found"
+            exit 1
+          fi
+
       # 运行脚本，禁用内部推送
       - name: Run ip-filter-speedtest-api.py
         env:
@@ -54,20 +73,20 @@ jobs:
       # 检查生成的文件
       - name: Check generated files
         run: |
-          ls -l ip.txt ips.txt ip.csv || echo "部分文件可能未生成"
+          ls -l ip.txt ips.txt ip.csv .ip.csv speedtest.log || echo "部分文件可能未生成"
 
       # 配置 Git
       - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
 
       # 提交更改
       - name: Commit changes
         run: |
-          git add ip.txt ips.txt ip.csv
+          git add ip.txt ips.txt ip.csv .ip.csv speedtest.log
           if git diff --staged --quiet; then
-            echo "没有更改需要提交"
+            echo "No changes to commit"
             exit 0
           fi
           git commit -m "Update IP lists and test results [ci skip]"
@@ -90,5 +109,7 @@ jobs:
             ip.txt
             ips.txt
             ip.csv
+            .ip.csv
             speedtest.log
           if-no-files-found: warn
+```
