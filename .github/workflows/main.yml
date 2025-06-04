@@ -6,6 +6,8 @@ on:
       - main
     paths-ignore:
       - 'ips.txt'
+      - 'ip.txt'
+      - 'ip.csv'
   workflow_dispatch:
   schedule:
     - cron: '0 16 */3 * *'
@@ -42,20 +44,29 @@ jobs:
       - name: Run collect_ips.py
         run: python collect_ips.py
 
-      - name: Commit and push ips.txt
+      - name: Commit and push files
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          if [ -f ips.txt ]; then
-            git add ips.txt
-            if git diff --staged --quiet; then
-              echo "No changes to commit"
+          # 添加所有目标文件
+          files=("ips.txt" "ip.txt" "ip.csv")
+          files_added=false
+          for file in "${files[@]}"; do
+            if [ -f "$file" ]; then
+              git add "$file"
+              files_added=true
+              echo "Added $file to git"
             else
-              git commit -m "Update ips.txt file"
-              git push
+              echo "$file not found, skipping"
             fi
+          done
+          # 检查是否有更改
+          if [ "$files_added" = true ] && ! git diff --staged --quiet; then
+            git commit -m "Update ips.txt, ip.txt, and ip.csv files"
+            git push
+            echo "Changes committed and pushed"
           else
-            echo "ips.txt not found, skipping commit"
+            echo "No changes to commit or no files added"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -67,6 +78,7 @@ jobs:
           name: workflow-artifacts
           path: |
             ips.txt
+            ip.txt
             ip.csv
             speedtest.log
           if-no-files-found: warn # 如果文件缺失，仅警告
