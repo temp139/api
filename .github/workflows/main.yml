@@ -2,7 +2,7 @@ name: Generate IPs
 
 on:
   schedule:
-    - cron: '0 16 */3 * *' # 东八区每3天凌晨00:00（UTC 16:00 前一天）
+    - cron: '0 16 1 * *' # 每月1号 UTC 16:00（东八区次日 00:00）
   workflow_dispatch: # 支持手动触发
   push:
     branches:
