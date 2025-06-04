@@ -1713,8 +1713,11 @@ def setup_git_config(is_github_actions: bool = False):
         logger.error(f"设置 Git 全局配置失败: {e}")
         sys.exit(1)
 
-def commit_and_push(is_github_actions: bool = False):
+def commit_and_push(is_github_actions: bool = False, no_push: bool = False):
     """提交并推送更改到 GitHub"""
+    if no_push:
+        logger.info("检测到 --no-push 参数，跳过 Git 提交和推送")
+        return
     config = load_config()
     if not config:
         logger.error(f"未找到有效的 Git 配置，请确保 {CONFIG_FILE} 存在且有效")
@@ -1808,6 +1811,7 @@ def main():
     )
     parser.add_argument("--offline", action="store_true", help="离线模式，不下载 GeoIP 数据库")
     parser.add_argument("--update-geoip", action="store_true", help="强制更新 GeoIP 数据库")
+    parser.add_argument("--no-push", action="store_true", help="禁用 Git 提交和推送")
     args = parser.parse_args()
 
     is_github_actions = os.getenv("GITHUB_ACTIONS") == "true"
@@ -1873,7 +1877,7 @@ def main():
         sys.exit(1)
 
     # 提交并推送
-    commit_and_push(is_github_actions=is_github_actions)
+    commit_and_push(is_github_actions=is_github_actions, no_push=args.no_push)
 
     logger.info("脚本执行完成")
 
