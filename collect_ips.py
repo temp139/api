@@ -26,7 +26,7 @@ LOG_PATH = os.path.join(LOG_DIR, LOG_FILE)
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s [%(levelname)s] %(message)s',
+    format='%(message)s',
     handlers=[
         logging.FileHandler(LOG_PATH, encoding="utf-8", mode="w"),
         logging.StreamHandler(sys.stdout)
@@ -71,36 +71,36 @@ COUNTRY_LABELS = {
     'MY': ('🇲🇾', '马来西亚'), 'TH': ('🇹🇭', '泰国'), 'ID': ('🇮🇩', '印度尼西亚'), 'PH': ('🇵🇭', '菲律宾'), 'VN': ('🇻🇳', '越南'),
     'IN': ('🇮🇳', '印度'), 'MO': ('🇲🇴', '澳门'), 'KH': ('🇰🇭', '柬埔寨'), 'LA': ('🇱🇦', '老挝'), 'MM': ('🇲🇲', '缅甸'),
     'MN': ('🇲🇳', '蒙古'), 'KP': ('🇰🇵', '朝鲜'), 'CN': ('🇨🇳', '中国'), 'BD': ('🇧🇩', '孟加拉国'), 'PK': ('🇵🇰', '巴基斯坦'),
-    'LK': ('🇱🇰', '斯里兰卡'), 'NP': ('🇵🇵', '尼泊尔'), 'MV': ('🇲🇻', '马尔代夫'), 'BN': ('🇧🇳', '文莱'),
+    'LK': ('🇱🇰', '斯里兰卡'), 'NP': ('🇳🇵', '尼泊尔'), 'MV': ('🇲🇻', '马尔代夫'), 'BN': ('🇧🇳', '文莱'),
     'SA': ('🇸🇦', '沙特阿拉伯'), 'AE': ('🇦🇪', '阿联酋'), 'QA': ('🇶🇦', '卡塔尔'), 'IL': ('🇮🇱', '以色列'), 'TR': ('🇹🇷', '土耳其'),
-    'IR': ('🇮🇷', '伊朗'), 'KW': ('🇰🇼', '科威特'), 'BH': ('🇬🇭', '巴林'), 'OM': ('🇴🇲', '阿曼'), 'JO': ('🇯🇴', '约旦'),
+    'IR': ('🇮🇷', '伊朗'), 'KW': ('🇰🇼', '科威特'), 'BH': ('🇧🇭', '巴林'), 'OM': ('🇴🇲', '阿曼'), 'JO': ('🇯🇴', '约旦'),
     'LB': ('🇱🇧', '黎巴嫩'), 'SY': ('🇸🇾', '叙利亚'), 'IQ': ('🇮🇶', '伊拉克'), 'YE': ('🇾🇪', '也门'),
     'GB': ('🇬🇧', '英国'), 'DE': ('🇩🇪', '德国'), 'FR': ('🇫🇷', '法国'), 'IT': ('🇮🇹', '意大利'), 'ES': ('🇪🇸', '西班牙'),
     'NL': ('🇳🇱', '荷兰'), 'FI': ('🇫🇮', '芬兰'), 'SE': ('🇸🇪', '瑞典'), 'NO': ('🇳🇴', '挪威'), 'DK': ('🇩🇰', '丹麦'),
     'CH': ('🇨🇭', '瑞士'), 'AT': ('🇦🇹', '奥地利'), 'BE': ('🇧🇪', '比利时'), 'IE': ('🇮🇪', '爱尔兰'), 'PT': ('🇵🇹', '葡萄牙'),
-    'GR': ('🇬🇷', '希腊'), 'EG': ('🇪🇬', '埃及'), 'AU': ('🇦🇺', '澳大利亚'), 'US': ('🇺🇸', '美国'), 'BG': ('🇬🇧', '保加利亚'), 
-    'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'AW': ('🇦', 'AW'), 'AM': ('🇦🇲', 'AM'),
-    'CA': ('🇨🇦', '加拿大'), 'NZ': ('🇳🇿', '新西兰'), 'BR': ('🇧🇷', '巴西'), 'RU': ('🇷🇺', '俄罗斯'),
-    'PL': ('🇵🇱', '波兰'), 'UA': ('🇺🇦', '乌克兰'), 'CZ': ('🇨🇿', '捷克'), 'HU': ('🇭🇺', '匈牙利'), 
-    'RO': ('🇷🇴', '罗马尼亚'), 'EE': ('🇪🇪', '爱沙尼亚'), 'LV': ('🇱🇻', '拉脱维亚'), 'LT': ('🇱🇹', '立陶宛')
+    'GR': ('🇬🇷', '希腊'), 'EG': ('🇪🇬', '埃及'), 'AU': ('🇦🇺', '澳大利亚'), 'US': ('🇺🇸', '美国'), 'BG': ('🇧🇬', '保加利亚'),
+    'SK': ('🇸🇰', '斯洛伐克'), 'SI': ('🇸🇮', '斯洛文尼亚'), 'PL': ('🇵🇱', '波兰'), 'HU': ('🇭🇺', '匈牙利'), 'RO': ('🇷🇴', '罗马尼亚'),
+    'CZ': ('🇨🇿', '捷克'), 'EE': ('🇪🇪', '爱沙尼亚'), 'LV': ('🇱🇻', '拉脱维亚'), 'UA': ('🇺🇦', '乌克兰'), 'MD': ('🇲🇩', '摩尔多瓦'),
+    'CY': ('🇨🇾', '塞浦路斯'), 'BR': ('🇧🇷', '巴西')
 }
 
+# 国家别名（包括城市和数据中心）
 COUNTRY_ALIASES = {
-    'SOUTH KOREA': 'KR', 'KOREA': 'KR', 'REPUBLIC OF KOREA': 'KR', 'KOREA, REPUBLIC OF': 'KR', '韩国': 'KR',
+    'SOUTH KOREA': 'KR', 'KORE': 'KR', 'REPUBLIC OF KOREA': 'KR', 'KOREA, REPUBLIC OF': 'KR', '韩国': 'KR', 'SEOUL': 'KR', '首尔': 'KR', 'ICN': 'KR',
     'HONG KONG': 'HK', 'HONGKONG': 'HK', 'HK SAR': 'HK', '香港': 'HK',
-    'UNITED STATES': 'US', 'USA': 'US', 'U.S.': 'US', 'UNITED STATES OF AMERICA': 'US', '美国': 'US',
-    'UNITED KINGDOM': 'GB', 'GREAT BRITAIN': 'GB', 'UK': 'GB', '英国': 'GB',
-    'JAPAN': 'JP', 'JPN': 'JP', '日本': 'JP',
-    'TAIWAN': 'TW', 'TWN': 'TW', 'TAIWAN, PROVINCE OF CHINA': 'TW', '台湾': 'TW',
+    'UNITED STATES': 'US', 'USA': 'US', 'U.S.': 'US', 'UNITED STATES OF AMERICA': 'US', '美国': 'US', 'LOS ANGELES': 'US', '洛杉矶': 'US', 'CHICAGO': 'US',
+    'UNITED KINGDOM': 'GB', 'GREAT BRITAIN': 'GB', '英国': 'GB',
+    'JAPAN': 'JP', 'JPN': 'JP', '日本': 'JP', 'TOKYO': 'JP', '东京': 'JP', 'OSAKA': 'JP', '大阪': 'JP',
+    'TAIWAN': 'TW', 'TWN': 'TW', 'TAIWAN, PROVINCE OF CHINA': 'TW', '台湾': 'TW', 'TAIPEI': 'TW', '台北': 'TW',
     'SINGAPORE': 'SG', 'SGP': 'SG', '新加坡': 'SG',
     'FRANCE': 'FR', 'FRA': 'FR', '法国': 'FR',
-    'GERMANY': 'DE', 'DEU': 'DE', '德国': 'DE',
-    'NETHERLANDS': 'NL', 'NLD': 'NL', '荷兰': 'NL',
+    'GERMANY': 'DE', 'DEU': 'DE', '德国': 'DE', 'FRANKFURT': 'DE', '法兰克福': 'DE', 'FRA': 'DE',
+    'NETHERLANDS': 'NL', 'NLD': 'NL', '荷兰': 'NL', 'AMSTERDAM': 'NL',
     'AUSTRALIA': 'AU', 'AUS': 'AU', '澳大利亚': 'AU',
     'CANADA': 'CA', 'CAN': 'CA', '加拿大': 'CA',
-    'BRAZIL': 'BR', 'BRA': 'BR', '巴西': 'BR',
+    'BRAZIL': 'BR', 'BRA': 'BR', '巴西': 'BR', 'SAO PAULO': 'BR', '圣保罗': 'BR', 'GRU': 'BR',
     'RUSSIA': 'RU', 'RUS': 'RU', '俄罗斯': 'RU',
-    'INDIA': 'IN', 'IND': 'IN', '印度': 'IN',
+    'INDIA': 'IN', 'IND': 'IN', '印度': 'IN', 'MUMBAI': 'IN', '孟买': 'IN', 'DELHI': 'IN', 'BANGALORE': 'IN', '班加罗尔': 'IN',
     'CHINA': 'CN', 'CHN': 'CN', '中国': 'CN',
     'VIETNAM': 'VN', 'VIET NAM': 'VN', '越南': 'VN',
     'THAILAND': 'TH', 'THA': 'TH', '泰国': 'TH',
@@ -108,16 +108,17 @@ COUNTRY_ALIASES = {
     'NORTH KOREA': 'KP', 'KOREA, DEMOCRATIC PEOPLE\'S REPUBLIC OF': 'KP', '朝鲜': 'KP',
     'BRUNEI': 'BN', 'BRUNEI DARUSSALAM': 'BN', '文莱': 'BN',
     'MALDIVES': 'MV', '马尔代夫': 'MV',
-    'SINGAPORE': 'SG', '新加坡': 'SG',
-    'HONGKONG': 'HK', '香港': 'HK',
-    'MUMBAI': 'IN', '孟买': 'IN',
-    'BANGALORE': 'IN', '班加罗尔': 'IN',
-    'LOSANGELES': 'US', '洛杉矶': 'US',
-    'TOKYO': 'JP', '东京': 'JP',
-    'SEOUL': 'KR', '首尔': 'KR',
-    'TAIPEI': 'TW', '台北': 'TW',
-    'OSAKA': 'JP', '大阪': 'JP',
-    'STOCKHOLM': 'SE', '斯德哥尔摩': 'SE'
+    'POLAND': 'PL', '波兰': 'PL', 'WARSAW': 'PL', '华沙': 'PL', 'WAW': 'PL',
+    'HUNGARY': 'HU', '匈牙利': 'HU', 'BUDAPEST': 'HU', '布达佩斯': 'HU', 'BUD': 'HU',
+    'ROMANIA': 'RO', '罗马尼亚': 'RO', 'BUCHAREST': 'RO', '布加勒斯特': 'RO', 'OTP': 'RO',
+    'CZECH REPUBLIC': 'CZ', '捷克': 'CZ', 'PRAGUE': 'CZ', '布拉格': 'CZ', 'PRG': 'CZ',
+    'ESTONIA': 'EE', '爱沙尼亚': 'EE', 'TALLINN': 'EE', '塔林': 'EE', 'TLL': 'EE',
+    'LATVIA': 'LV', '拉脱维亚': 'LV', 'RIGA': 'LV', '里加': 'LV', 'RIX': 'LV',
+    'UKRAINE': 'UA', '乌克兰': 'UA', 'KYIV': 'UA', '基辅': 'UA', 'KBP': 'UA',
+    'SWEDEN': 'SE', '瑞典': 'SE', 'STOCKHOLM': 'SE', '斯德哥尔摩': 'SE', 'ARN': 'SE',
+    'MOLDOVA': 'MD', '摩尔多瓦': 'MD', 'CHISINAU': 'MD', '基希讷乌': 'MD', 'KIV': 'MD',
+    'CYPRUS': 'CY', '塞浦路斯': 'CY', 'NICOSIA': 'CY', '尼科西亚': 'CY', 'LCA': 'CY',
+    'AUSTRIA': 'AT', '奥地利': 'AT', 'VIENNA': 'AT', '维也纳': 'AT', 'VIE': 'AT'
 }
 
 def check_and_install_dependencies(auto_install: bool, pip_source: str = None) -> bool:
@@ -227,19 +228,33 @@ def standardize_country(value: str) -> str:
     return ''
 
 def find_country_column(header: List[str]) -> int:
+    country_col = -1
     for idx, col in enumerate(header):
         col_lower = col.strip().lower()
-        if any(k in col_lower for k in ['country', '国家', 'country_code', 'cc', 'iso_code', 'nation', 'location', 'region', 'geo', 'area']):
+        if col_lower in ['country', '国家', 'country_code', 'countrycode', '国际代码', 'nation', 'location', 'region', 'geo', 'area']:
+            country_col = idx
             logger.info(f"检测到国家列: 第 {idx + 1} 列 (字段名: {col})")
-            return idx
-    logger.warning("未检测到国家列，将扫描行数据")
-    return -1
+            break
+    return country_col
 
-def extract_country_from_row(row: List[str], country_col: int) -> str:
+def find_city_or_dc_column(header: List[str]) -> int:
+    city_col = -1
+    for idx, col in enumerate(header):
+        col_lower = col.strip().lower()
+        if col_lower in ['city', '城市', 'data_center', 'datacenter', '数据中心', 'location', '地区']:
+            city_col = idx
+            logger.info(f"检测到城市/数据中心列: 第 {idx + 1} 列 (字段名: {col})")
+            break
+    return city_col
+
+def extract_country_from_row(row: List[str], country_col: int, city_col: int) -> str:
+    # 优先从国家列提取
     if country_col != -1 and country_col < len(row):
         country = standardize_country(row[country_col].strip())
         if country:
             return country
+    
+    # 从城市/数据中心列或其他列查找
     for col, field in enumerate(row):
         field = field.strip()
         if is_country_like(field):
@@ -247,6 +262,7 @@ def extract_country_from_row(row: List[str], country_col: int) -> str:
             if country:
                 logger.info(f"从第 {col + 1} 列提取国家: {field} -> {country}")
                 return country
+    
     return ''
 
 def detect_delimiter(lines: List[str]) -> str:
@@ -365,20 +381,25 @@ def extract_ip_ports_from_csv(file_path: str) -> List[Tuple[str, int, str]]:
 
     delimiter = detect_delimiter(lines)
     ip_col, port_col, country_col = 0, 1, -1
+    city_col = -1
     lines_to_process = lines
     if lines and lines[0].strip() and not lines[0].startswith('#'):
         header = lines[0].strip().split(delimiter)
         logger.info(f"CSV header: {header}")
         for idx, col in enumerate(header):
             col_lower = col.strip().lower()
-            if col_lower in ['ip', 'address', 'ip_address', 'ip地址', 'ip_addr']:
+            if col_lower in ['ip', 'address', 'ip_address', 'ip_addr', 'ip地址']:
                 ip_col = idx
             elif col_lower in ['port', '端口']:
                 port_col = idx
             elif col_lower in ['country', '国家', 'country_code', '国际代码', 'location', 'country_name']:
                 country_col = idx
+            elif col_lower in ['city', '城市', 'data_center', 'datacenter', '数据中心', '地区']:
+                city_col = idx
         if country_col == -1:
             country_col = find_country_column(header)
+        if city_col == -1:
+            city_col = find_city_or_dc_column(header)
         lines_to_process = lines[1:]
 
     ip_ports = []
@@ -388,16 +409,16 @@ def extract_ip_ports_from_csv(file_path: str) -> List[Tuple[str, int, str]]:
         if not line or line.startswith('#'):
             continue
         fields = line.split(delimiter)
-        if len(fields) <= max(ip_col, port_col, country_col):
+        if len(fields) <= max(ip_col, port_col, country_col, city_col):
             continue
         ip = fields[ip_col].strip()
         port = fields[port_col].strip()
-        country = extract_country_from_row(fields, country_col)
+        country = extract_country_from_row(fields, country_col, city_col)
         if country:
             country_counts[country] += 1
         if is_valid_ip(ip) and is_valid_port(port):
             ip_ports.append((ip, int(port), country))
-    logger.info(f"Extracted {len(ip_ports)} nodes from CSV {file_path}")
+    logger.info(f"Extracted {len(ip_ports)} IPs from CSV {file_path}")
     if country_counts:
         logger.debug(f"Country distribution in CSV: {dict(country_counts)}")
     return list(dict.fromkeys(ip_ports))
@@ -428,18 +449,26 @@ def write_ip_list(ip_ports: List[Tuple[str, int, str]]) -> str:
         logger.error("No IPs to write to ip list")
         return None
     try:
+        # 过滤 CSV 节点
+        desired_countries = set(DESIRED_COUNTRIES) if DESIRED_COUNTRIES else set()
+        filtered_ip_ports = [(ip, port, country) for ip, port, country in ip_ports if not country or country in desired_countries]
+        
+        if not filtered_ip_ports:
+            logger.error("No IPs match desired countries or available")
+            return None
+        
         # 去重
         unique_ip_ports = []
         seen = set()
-        for ip, port, _ in ip_ports:
+        for ip, port, country in filtered_ip_ports:
             key = (ip, port)
             if key not in seen:
                 seen.add(key)
-                unique_ip_ports.append((ip, port))
+                unique_ip_ports.append((ip, port, country))
         
-        # 写入 ip.txt（格式：IP 端口）
+        # 写入 ip.txt
         with open(IP_LIST_FILE, "w", encoding="utf-8-sig") as f:
-            for ip, port in unique_ip_ports:
+            for ip, port, _ in unique_ip_ports:
                 f.write(f"{ip} {port}\n")
         
         logger.info(f"Generated {IP_LIST_FILE} with {len(unique_ip_ports)} nodes")
@@ -463,19 +492,20 @@ def run_speed_test() -> str:
         if system == "windows":
             command = [SPEEDTEST_SCRIPT]
         elif is_termux:
-            command = ["bash", SPEEDTEST_SCRIPT]
+            command = ["bash", "-c", SPEEDTEST_SCRIPT]
         else:
             bash_path = shutil.which("bash") or "bash"
             command = ["stdbuf", "-oL", bash_path, SPEEDTEST_SCRIPT]
         process = subprocess.Popen(
-            command,
+            command, 
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             encoding='utf-8',
             errors='replace'
         )
-        stdout_lines, stderr_lines = [], []
+        stdout_lines = []
+        stderr_lines = []
         def read_stream(stream, lines, is_stderr=False):
             while True:
                 line = stream.readline()
@@ -508,7 +538,7 @@ def run_speed_test() -> str:
                     logger.debug(f"Content: {content}")
             except Exception as e:
                 logger.error(f"Failed to read {FINAL_CSV}: {e}")
-            return None
+                return None
         
         try:
             with open(FINAL_CSV, 'r', encoding='utf-8') as f:
@@ -534,33 +564,21 @@ def run_speed_test() -> str:
 def generate_ips_file(csv_file: str) -> int:
     start_time = time.time()
     if not os.path.exists(csv_file):
-        logger.error(f"{csv_file} 不存在")
+        logger.error(f"{csv_file} does not exist")
         return 0
-
-    # 检测编码
-    with open(csv_file, "rb") as f:
-        raw_data = f.read()
-    encoding = detect(raw_data).get("encoding", "utf-8")
-    logger.info(f"检测到 {csv_file} 的编码: {encoding}")
-
-    # 检测分隔符
-    content = raw_data.decode(encoding, errors="replace")
-    lines = content.splitlines()
-    delimiter = detect_delimiter(lines)
-    logger.info(f"检测到分隔符: '{delimiter}'")
-
+    
     final_nodes = []
     try:
-        with open(csv_file, "r", encoding=encoding, errors="replace") as f:
-            reader = csv.reader(f, delimiter=delimiter)
+        with open(csv_file, "r", encoding="utf-8-sig") as f:
+            reader = csv.reader(f)
             header = next(reader, None)
             if not header:
-                logger.error(f"{csv_file} 没有有效的表头")
+                logger.error(f"No valid header in {csv_file}")
                 return 0
-            logger.info(f"标头: {header}")
-
-            # 确定国家列
+            logger.info(f"CSV header: {', '.join(header)}")
+            
             country_col = find_country_column(header)
+            city_col = find_city_or_dc_column(header)
             ip_col, port_col = 0, 1
             for idx, col in enumerate(header):
                 col_lower = col.strip().lower()
@@ -568,31 +586,30 @@ def generate_ips_file(csv_file: str) -> int:
                     ip_col = idx
                 elif col_lower in ['port', '端口']:
                     port_col = idx
-
-            # 逐行处理
+            
             row_count = 0
             for row in reader:
                 row_count += 1
-                if len(row) <= max(ip_col, port_col, country_col):
-                    logger.debug(f"跳过无效行 {row_count}: {row}")
+                if len(row) <= max(ip_col, port_col, country_col, city_col):
+                    logger.debug(f"Skipping invalid row {row_count}: {row}")
                     continue
-                ip, port = row[ip_col].strip(), row[port_col].strip()
+                ip = row[ip_col].strip()
+                port = str(row[port_col]).strip()
+                country = extract_country_from_row(row, country_col, city_col)
                 if not is_valid_ip(ip) or not is_valid_port(port):
-                    logger.debug(f"无效 IP/端口在行 {row_count}: {ip}:{port}")
+                    logger.debug(f"Invalid IP/port in row {row_count}: {ip}:{port}")
                     continue
-                country = extract_country_from_row(row, country_col)
-                logger.debug(f"行 {row_count}: {row}, 提取国家: {country}")
                 final_nodes.append((ip, int(port), country))
-            logger.info(f"从 {csv_file} 读取 {row_count} 行，找到 {len(final_nodes)} 个有效节点")
+            logger.info(f"Read {row_count} rows from {csv_file}, found {len(final_nodes)} valid nodes")
     except Exception as e:
-        logger.error(f"无法读取 {csv_file}: {e}")
+        logger.error(f"Failed to read {csv_file}: {e}")
         return 0
-
+    
     if not final_nodes:
-        logger.error(f"没有符合条件的节点")
+        logger.error(f"No valid nodes found in {csv_file}")
         return 0
-
-    # 按国家排序并生成标签
+        
+    logger.info(f"Found {len(final_nodes)} nodes before deduplication")
     country_count = defaultdict(int)
     country_seq = defaultdict(int)
     labeled_nodes = []
@@ -600,11 +617,10 @@ def generate_ips_file(csv_file: str) -> int:
         country = country or 'UNKNOWN'
         country_count[country] += 1
         country_seq[country] += 1
-        emoji, name = COUNTRY_LABELS.get(country, ('🌐', '未知'))
-        label = f"{emoji}{name}-{country_seq[country]}"
+        emoji, name = COUNTRY_LABELS.get(country, ('🌈', '未知地区'))
+        label = f"{emoji} {name}-{country_seq[country]}"
         labeled_nodes.append((ip, port, label))
-
-    # 去重
+    
     unique_nodes = []
     seen = set()
     for ip, port, label in labeled_nodes:
@@ -612,17 +628,19 @@ def generate_ips_file(csv_file: str) -> int:
         if key not in seen:
             seen.add(key)
             unique_nodes.append((ip, port, label))
-
-    # 写入 ips.txt
+    
     try:
         with open(IPS_FILE, "w", encoding="utf-8-sig") as f:
             for ip, port, label in unique_nodes:
                 f.write(f"{ip}:{port}#{label}\n")
-        logger.info(f"生成 {IPS_FILE}，包含 {len(unique_nodes)} 个节点 (耗时: {time.time() - start_time:.2f} 秒)")
-        logger.info(f"国家分布: {dict(country_count)}")
+        logger.info(f"Generated {IPS_FILE} with {len(unique_nodes)} unique nodes")
+        logger.debug(f"Country distribution: {{ {', '.join(f'{k}: {v}' for k, v in sorted(country_count.items()))} }}")
         return len(unique_nodes)
+    except PermissionError as e:
+        logger.error(f"Failed to write {IPS_FILE}: {e}")
+        return 0
     except Exception as e:
-        logger.error(f"无法写入 {IPS_FILE}: {e}")
+        logger.error(f"Failed to write {IPS_FILE}: {e}")
         return 0
 
 def main():
