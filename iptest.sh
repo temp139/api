@@ -1,3 +1,3 @@
    #!/bin/bash
 
-   ./iptest -file="ip.txt"  -speedtest=3 -speedlimit=120 -url="speed.cloudflare.com/__down?bytes=50000000" -max=100 -outfile="ip.csv"
+   ./iptest -file="ip.txt"  -speedtest=3 -speedlimit=10 -url="speed.cloudflare.com/__down?bytes=50000000" -max=100 -outfile="ip.csv"
