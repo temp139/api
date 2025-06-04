@@ -39,22 +39,29 @@ jobs:
           python3 -m pip install --upgrade pip
           echo "Python executable: $(which python3)"
 
+      # 验证 requirements.txt
+      - name: Verify requirements.txt
+        run: |
+          if [ -f requirements.txt ]; then
+            echo "requirements.txt 存在"
+            cat requirements.txt
+          else
+            echo "ERROR: requirements.txt not found"
+            exit 1
+          fi
+
       # 安装系统依赖
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libmaxminddb-dev
 
-      # 创建并激活虚拟环境，安装 Python 依赖
-      - name: Set up virtual environment
+      # 安装 Python 依赖
+      - name: Install Python dependencies
         run: |
-          python3 -m venv .venv
-          ls -l .venv/bin/python3 || echo "ERROR: .venv/bin/python3 not found"
-          source .venv/bin/activate
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip list
-          echo "Virtual environment Python: $(which python)"
+          pip3 install --user -r requirements.txt
+          pip3 list
+          echo "System Python: $(which python3)"
 
       # 检查 GeoIP 数据库
       - name: Check GeoIP database
@@ -89,8 +96,7 @@ jobs:
         env:
           MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
         run: |
-          source .venv/bin/activate
-          python ip-filter-speedtest-api.py --url=https://bihai.cf/CFIP/CUCC/standard.csv,https://bihai.cf/CFIP/CMCC/standard.csv --no-push --update-geoip
+          python3 ip-filter-speedtest-api.py --url=https://bihai.cf/CFIP/CUCC/standard.csv,https://bihai.cf/CFIP/CMCC/standard.csv --no-push --update-geoip
         continue-on-error: false
 
       # 检查生成的文件
